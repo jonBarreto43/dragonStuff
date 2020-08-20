@@ -1,0 +1,71 @@
+<aura:component controller="castlerTreasureShopController">
+    <aura:attribute name="currentAc" type="Account"/>
+    <aura:attribute name="castle1" type="Product2"/>
+    <aura:attribute name="castle2" type="Product2"/>
+    <aura:attribute name="castle3" type="Product2"/>
+    <aura:attribute name="castle4" type="Product2"/>
+    <aura:attribute name="castle5" type="Product2"/>
+    <aura:attribute name="castle6" type="Product2"/>
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="clicked" type="boolean" default="false"/>
+    <aura:handler name="currentAccGrab" event="c:castleTreasureAccEvent" action="{!c.showEvent}"/>
+    <p>Sand Castles: {!v.currentAc.sandCastle__c}</p>
+    <p>Brick Castles: {!v.currentAc.brickCastle__c}</p>
+    <p>Stone Castles: {!v.currentAc.stoneCastle__c}</p>
+    <p>Disney Castles: {!v.currentAc.disneyCastle__c}</p>
+    <p>Medieval Times Dinner and Tournament Castles: {!v.currentAc.midCastle__c}</p>
+    <p>Bouncy Castles: {!v.currentAc.bouncyCastle__c}</p>
+    <p>You Total Treasure: {!v.currentAc.Treasure_Total__c}</p>
+    <p>{!v.message}</p>
+    <lightning:button label="display shop" onclick="{!c.displayStuff}"/>
+    <aura:if isTrue="{!v.clicked}">
+        <lightning:card>
+            <div style="height:25em;width:25em">
+                <img src="{!$Resource.stoneCastle}"/>
+            </div>
+            <p>{!v.castle1.Name}</p>
+            <p>THIS IS $500,00 in Treasure</p>
+            <lightning:button label="buyCastle" onclick="{!c.buyOne}"/>
+        </lightning:card>
+        <lightning:card>
+            <div style="height:25em;width:25em">
+                <img src="{!$Resource.bouncyCastle}"/>
+            </div>
+            <p>{!v.castle2.Name}</p>
+            <p>THIS IS $10,000,000 in Treasure</p>
+            <lightning:button label="buyCastle" onclick="{!c.buyTwo}"/>
+        </lightning:card>
+        <lightning:card>
+            <div style="height:25em;width:25em">
+                <img src="{!$Resource.sandCastle}"/>
+            </div>
+            <p>{!v.castle3.Name}</p>
+            <p>THIS IS $10 in Treasure</p>
+            <lightning:button label="buyCastle" onclick="{!c.buyThree}"/>
+        </lightning:card>
+        <lightning:card>
+            <div style="height:25em;width:25em">
+                <img src="{!$Resource.disneyCastle}"/>
+            </div>
+            <p>{!v.castle4.Name}</p>
+            <p>THIS IS $800,000 in Treasure</p>
+            <lightning:button label="buyCastle" onclick="{!c.buyFour}"/>
+        </lightning:card>
+        <lightning:card>
+            <div style="height:25em;width:25em">
+                <img src="{!$Resource.midCastle}"/>
+            </div>
+            <p>{!v.castle5.Name}</p>
+            <p>THIS IS $1,000,000 in Treasure</p>
+            <lightning:button label="buyCastle" onclick="{!c.buyFive}"/>
+        </lightning:card>
+        <lightning:card>
+            <div style="height:25em;width:25em">
+                <img src="{!$Resource.brickCastle}"/>
+            </div>
+            <p>{!v.castle6.Name}</p>
+            <p>THIS IS $200,000 in Treasure</p>
+            <lightning:button label="buyCastle" onclick="{!c.buySix}"/>
+        </lightning:card>
+    </aura:if>
+</aura:component>
