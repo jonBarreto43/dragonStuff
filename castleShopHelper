@@ -1,0 +1,38 @@
+({
+	getStuff : function(cmp) {
+		let action = cmp.get("c.displayShop");
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            console.log(response.getState());
+            if(state === "SUCCESS"){
+                let shopList = response.getReturnValue();
+                cmp.set("v.castle1", shopList[0]);
+                cmp.set("v.castle2", shopList[1]);
+                cmp.set("v.castle3", shopList[2]);
+                cmp.set("v.castle4", shopList[3]);
+                cmp.set("v.castle5", shopList[4]);
+                cmp.set("v.castle6", shopList[5]);
+                cmp.set("v.clicked", true);
+            }
+        });
+        $A.enqueueAction(action);
+	},
+    buyCastle : function(cmp,choice){
+        var uA = cmp.get("v.currentAc.Name");
+        console.log(uA);
+        let action = cmp.get("c.getCastle");
+        action.setParams({choice:JSON.stringify(choice), acc:JSON.stringify(uA)});
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            console.log(response.getState());
+            if(state === "SUCCESS"){
+                if(response.getReturnValue()){
+                	cmp.set('v.message', 'Successfully Purchased');
+                } else {
+                    cmp.set('v.message', 'Not enough Money');
+                }
+            }
+        });
+        $A.enqueueAction(action);
+    }
+})
