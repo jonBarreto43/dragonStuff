@@ -1,0 +1,26 @@
+({
+	checkS : function(cmp,username,password) {
+		let action = cmp.get("c.accountValid");
+        action.setParams({username: JSON.stringify(username),password:JSON.stringify(password)});
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            console.log(response.getState());
+            if(state === "SUCCESS"){
+                cmp.set("v.valid", "You've Successfuly Logged in");
+                var a = cmp.getEvent("currentAccGrab");
+                cmp.set("v.ct",true);
+                console.log(response.getReturnValue().Name);
+                a.setParams({"currentAcc":response.getReturnValue()});
+                console.log(a.getParam("currentAcc"));
+                a.fire();
+                console.log("fired");
+                
+                //cmp.set("v.ct",true);
+                
+            } else {
+                cmp.set("v.valid", "Your info is incorrect");
+            }
+        });
+        $A.enqueueAction(action);
+    }
+})
