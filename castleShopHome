@@ -1,0 +1,15 @@
+<aura:component >
+    <aura:attribute name="login" type="boolean" default="true"/>
+    <aura:attribute name="currentAcco" type="Account"/>
+    
+    <aura:handler name="loginDown" event="c:castleTreasureEvent" action="{!c.changeLogin}"/>
+    <aura:handler name="currentAccGrab" event="c:castleTreasureAccEvent" action="{!c.sendEvent}"/>
+    <p>{!v.currentAcc.Name}</p>
+    <aura:if isTrue="{!v.login}">
+    	<c:castleTreasureLogin/> 
+        <aura:set attribute="else">
+            	<c:castleTreasureFlow/>
+                <c:castleTreasureShop currentAc="{!v.currentAcco}"/>
+        </aura:set>
+    </aura:if>
+</aura:component>
