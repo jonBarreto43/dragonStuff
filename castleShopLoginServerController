@@ -1,0 +1,8 @@
+public class castleTreasureLoginController {
+	@AuraEnabled
+    public static Account accountValid(String username, String password){
+        username = (String) JSON.deserializeUntyped(username);
+        password = (String) JSON.deserializeUntyped(password);
+        List<Account> x = [SELECT Name,Password__c,sandCastle__c,brickCastle__c,stoneCastle__c,disneyCastle__c,midCastle__c,bouncyCastle__c,Treasure_Total__c FROM Account WHERE Name = :username and Password__c = :password];
+        return x[0];
+    
