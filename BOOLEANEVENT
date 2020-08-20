@@ -1,0 +1,36 @@
+//////////////////////
+THIS EVENT TAKES A BOOLEAN PARAMETER
+/////////////////////
+
+<aura:event type="COMPONENT" description="Event template" >
+    <aura:attribute name="loginDown" type="boolean"/>
+</aura:event>
+
+//////////////////////
+THE EVENT IS REGISTERED IN A DEINITIALIZED COMPONENT
+/////////////////////
+
+<aura:component >
+	<aura:registerEvent name="loginDown" type="c:castleTreasureEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.changeValue}"/>
+</aura:component>
+
+//////////////////////////
+A BUTTON IN ANOTHER COMPONENT INITIALIZES IT IN AN AURA IF STATEMENT
+/////////////////////////
+WHEN IT THE COMPONENT IS INITIALIZED, IT IS FIRED
+////////////////////////
+({
+	changeValue : function(component, event, helper) {
+		let b = component.getEvent("loginDown");
+        b.setParams({"loginDown": false});
+        b.fire();
+	}
+})
+
+///////////////////////////
+THE EVENT BUBBLES UP THE HEIRARCHY TO THE PARENT COMPONENT
+//////////////////////////
+THE BOOLEAN DEINITIALIZES THE LOGIN PAGE 
+/////////////////////////
+THE BOOLEAN INITIALIZES THE OTHER CHILD COMPONENTS
