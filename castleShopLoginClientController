@@ -1,0 +1,7 @@
+({
+	checkStuff : function(component, event, helper) {
+        var username = component.find("username").get("v.value");
+        var password = component.find("password").get("v.value");
+		helper.checkS(component,username,password);
+	}
+})
