@@ -1,0 +1,4 @@
+<aura:component >
+    <lightning:button label="Transfer Treasure Officially" onclick="{!c.init}"/>
+    <lightning:flow aura:id="treasureFlow" />
+</aura:component>
