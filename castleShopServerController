@@ -1,0 +1,51 @@
+public class castlerTreasureShopController {
+	@AuraEnabled
+    public static List<Product2> displayShop(){
+        return [SELECT Name FROM Product2 WHERE isActive=True];
+    }
+    @AuraEnabled
+    public static Boolean getCastle(String choice, String acc){
+        Integer x = (Integer)JSON.deserializeUntyped(choice) - 1;
+        system.debug(acc);
+        acc = (String)JSON.deserializeUntyped(acc);
+        System.debug(acc);
+        List<Product2> pros = [SELECT Name FROM Product2 WHERE isActive=True];
+        List<Account> accs = [SELECT Name,Id,Treasure_Total__c,sandCastle__c,brickCastle__c,stoneCastle__c,disneyCastle__c,midCastle__c,bouncyCastle__c FROM Account WHERE Name=:acc];
+        Opportunity opp = new Opportunity();
+        opp.Name = pros[x].Name;
+        opp.CloseDate = Date.valueOf('2021-01-01');
+        opp.StageName = 'Closed Won';
+        opp.accountId = accs[0].Id;
+        if(pros[x].Name=='Stone Castle'){
+            opp.amount = 500000.00;
+            accs[0].stoneCastle__c = accs[0].stoneCastle__c + 1;
+        }
+        if(pros[x].Name=='Bouncy Castle'){
+            opp.amount = 10000000.00;
+            accs[0].bouncyCastle__c = accs[0].bouncyCastle__c +1;
+        }
+        if(pros[x].Name=='Sand Castle'){
+            opp.amount = 10.00;
+            accs[0].sandCastle__c = accs[0].sandCastle__c +1;
+        }
+        if(pros[x].Name=='Disney Castle'){
+            opp.amount = 800000.00;
+            accs[0].disneyCastle__c = accs[0].disneyCastle__c+1;
+        }
+        if(pros[x].Name=='Midieval Times Dinner and Tournament Castle'){
+            opp.amount = 1000000.00;
+            accs[0].midCastle__c = accs[0].midCastle__c+1;
+        }
+        if(pros[x].Name=='Brick Castle'){
+            opp.amount = 300000.00;
+            accs[0].brickCastle__c = accs[0].brickCastle__c+1;
+        }
+        if(accs[0].treasure_total__c > opp.amount){
+        	insert opp;
+            accs[0].treasure_total__c = accs[0].treasure_total__c - opp.amount;
+            update accs;
+            return true;
+        }
+        return false;
+    }
+}
