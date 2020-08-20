@@ -1,0 +1,13 @@
+({
+	changeLogin : function(component, event, helper) {
+		component.set("v.login", false);
+	},
+    
+    sendEvent: function(component, event, helper) {
+        console.log("got here");
+        let currentAcc = event.getParam("currentAcc");
+        console.log(currentAcc);
+        component.set("v.currentAcco", currentAcc);
+        console.log("passed");
+    }
+})
