@@ -1,0 +1,32 @@
+({
+	showEvent : function(component, event, helper) {
+        console.log("here");
+		let currentAcc = event.getParam("currentAcc");
+        component.set("v.currentAc", currentAcc);
+        console.log(component.get("v.currentAcc"));
+        console.log('Caught');
+	},
+    
+    displayStuff : function(component, event, helper){
+        helper.getStuff(component);
+    },
+    
+    buyOne : function(component, event, helper){
+        helper.buyCastle(component,1);
+    },
+    buyTwo : function(component, event, helper){
+        helper.buyCastle(component,2);
+    },
+    buyThree : function(component, event, helper){
+        helper.buyCastle(component,3);
+    },
+    buyFour : function(component, event, helper){
+        helper.buyCastle(component,4);
+    },
+    buyFive : function(component, event, helper){
+        helper.buyCastle(component,5);
+    },
+    buySix : function(component, event, helper){
+        helper.buyCastle(component,6);
+    }
+})
