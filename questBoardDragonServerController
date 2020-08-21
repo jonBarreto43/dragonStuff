@@ -1,0 +1,12 @@
+public class questBoardDragonController {
+	@AuraEnabled
+    public static List<Account> liveGuys(String accInfo){
+        accInfo = (String)JSON.deserializeUntyped(accInfo);
+        return [SELECT Name,Id,Treasure_Total__c FROM Account WHERE dungeonid__c=:accInfo and Active__c='yes'];
+    }
+    @AuraEnabled
+    public static List<Account> fallGuy(String accInfo){
+        accInfo = (String)JSON.deserializeUntyped(accInfo);
+        return [SELECT Name,Id,Treasure_Total__c FROM Account WHERE dungeonid__c=:accInfo and Active__c='no'];
+    }
+}
