@@ -1,0 +1,74 @@
+global with sharing class DungeonRoomUpdate implements Schedulable {
+
+    global void execute(SchedulableContext sc){
+        //Gets Active Heros
+        List<Account> heroAcc = [SELECT Id, Name, Active__c, Current_Room__c,DungeonID__c FROM Account WHERE Active__c = 'Yes' AND Type = 'hero' AND DungeonID__c !=null AND On_Quest__c=true];
+        //Gets active Dragons
+        List<Account> dragonAcc = [SELECT Id, Name, Active__c, Death_Room__c FROM Account WHERE Active__c = 'Yes' AND Type = 'dragon'];
+        
+        //Dragon Death Room
+        //Algorithm Room 1, then 4, then 2, then 3
+        for(Account a: dragonAcc){
+            if(a.Death_Room__c == 1){
+                a.Death_Room__c = 4;
+                continue;
+            }
+            if (a.Death_Room__c == 2) {
+                a.Death_Room__c = 3;
+                continue;
+            }
+            if (a.Death_Room__c == 3) {
+                a.Death_Room__c = 1;
+            }
+            if(a.Death_Room__c == 4){
+                a.Death_Room__c = 2;
+            }
+        }
+        
+        // Change Hero Room
+        for(Account acc: heroAcc){
+            // Get dungeon ID
+            List<Account> dragon = [SELECT Name,Death_Room__c,DungeonRoomOne__c,DungeonRoomTwo__c,DungeonRoomThree__c FROM Account WHERE ID =:acc.DungeonID__c];
+            if(acc.Current_Room__c < 4 && acc.Current_Room__c != null){
+                
+                acc.Current_Room__c++;
+                if(acc.Current_Room__c == dragon[0].Death_Room__c){
+                    acc.Active__c = 'No';
+                    if(acc.Current_Room__c == 1){
+                        acc.Slainby__c = dragon[0].DungeonRoomOne__c; // For Memoriam Page
+                    }
+                    if(acc.Current_Room__c == 2){
+                        acc.Slainby__c = dragon[0].DungeonRoomTwo__c; // For Memoriam Page
+                    }
+                    if(acc.Current_Room__c == 3){
+                        acc.Slainby__c = dragon[0].DungeonRoomThree__c; // For Memoriam Page
+                    }
+                    if(acc.Current_Room__c == 4){
+                        acc.Slainby__c = dragon[0].Name; // For Memoriam Page
+                    }
+                } 
+            }
+            // Hero Victory
+            if(acc.Current_Room__c == 4 && dragon[0].Death_Room__c != acc.Current_Room__c){
+                dragon[0].Active__c = 'No'; 
+                dragon[0].Slainby__c = acc.Name; // For Memoriam Page
+                acc.Treasure_Total__c = dragon[0].Treasure_Total__c; // Account Transfer
+                dragon[0].Treasure_Total__c = 0; // Funds Gone
+                acc.On_Quest__c = false;
+            }  
+        }
+        update heroAcc;
+        update dragonAcc;
+        
+        String day = string.valueOf(system.now().day());
+        String month = string.valueOf(system.now().month());
+        String hour = string.valueOf(system.now().hour());
+        String minute = string.valueOf(system.now().minute() + 10);
+        String second = string.valueOf(system.now().second());
+        String year = string.valueOf(system.now().year());
+        
+        String strJobName = 'Job-' + second + '_' + minute + '_' + hour + '_' + day + '_' + month + '_' + year;
+        String strSchedule = '0 ' + minute + ' ' + hour + ' ' + day + ' ' + month + ' ?' + ' ' + year;
+        System.schedule(strJobName, strSchedule, new DungeonRoomUpdate());
+    }  
+}
