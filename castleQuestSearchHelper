@@ -1,0 +1,27 @@
+({
+	helpGetAccount : function(component, accountKey) {
+		var action = component.get("c.getAccountResponse");
+        var accts = component.getEvent("currentAccGrab");
+        
+        action.setParams({
+            "accountKey": accountKey
+        });
+        
+        action.setCallback(this, function(data){
+            if(component.isValid()){
+                component.set("v.account", data.getReturnValue());
+                console.log(data.getReturnValue());
+                accts.setParams({"acc": data.getReturnValue()});
+                console.log(accts.getParam("acc"));
+                var acct = component.get("v.account");
+                component.set("v.isHero", true);
+                console.log(acct.Type);
+                accts.fire()
+                if(acct.Type == "Hero") {
+                    //component.set("v.isHero", true);
+                }
+            }   
+        });       
+        $A.enqueueAction(action);
+	}
+})
