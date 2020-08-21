@@ -1,0 +1,35 @@
+<aura:component controller="questBoardHeroController">
+    <p style="font-size:20px;font-style:oblique;font-weight:bold;text-align:center;">Hero's Quest Board!</p>
+    <aura:attribute name="heroAcc" type="Account"/>
+    <!--STEP 4: Gets list of available quests-->
+    <lightning:button label="Display Quests" onclick="{!c.getDrags}"/>
+    <aura:attribute name="clicked" type="boolean" default="false"/>
+    <aura:attribute name="drag1" type="Account"/>
+    <aura:attribute name="drag2" type="Account"/>
+    <aura:attribute name="drag3" type="Account"/>
+    <aura:attribute name="drag4" type="Account"/>
+    <aura:attribute name="message" type="string"/>
+    <p>{!v.message}</p>
+    <aura:if isTrue="{!v.clicked}">
+        <lightning:card>
+            <p>Boss: {!v.drag1.Name}</p>
+            <p>Treasure Total: {!v.drag1.Treasure_Total__c}</p>
+            <lightning:button label="Take on Quest" onclick="{!c.questOne}"/>
+        </lightning:card>
+        <lightning:card>
+            <p>Boss: {!v.drag2.Name}</p>
+            <p>Treasure Total: {!v.drag2.Treasure_Total__c}</p>
+            <lightning:button label="Take on Quest" onclick="{!c.questTwo}"/>
+        </lightning:card>
+        <lightning:card>
+            <p>Boss: {!v.drag3.Name}</p>
+            <p>Treasure Total: {!v.drag3.Treasure_Total__c}</p>
+            <lightning:button label="Take on Quest" onclick="{!c.questThree}"/>
+        </lightning:card>
+        <lightning:card>
+            <p>Boss: {!v.drag4.Name}</p>
+            <p>Treasure Total: {!v.drag4.Treasure_Total__c}</p>
+        </lightning:card>
+        <lightning:button label="Take on Quest" onclick="{!c.questFour}"/>
+    </aura:if>
+</aura:component>
