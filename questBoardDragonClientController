@@ -1,0 +1,9 @@
+({
+	liveOnes : function(component, event, helper) {
+		helper.getLive(component);
+	},
+    
+    fallOnes : function(component, event, helper) {
+        helper.getFall(component);
+    }
+})
