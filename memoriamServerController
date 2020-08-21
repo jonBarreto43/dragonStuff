@@ -1,0 +1,6 @@
+public class MemoriamController {
+	@AuraEnabled
+    public static List<Account> getFall(){
+        return [SELECT Name, Slainby__c FROM Account WHERE Active__c='No'];
+    }
+}
