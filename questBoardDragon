@@ -1,0 +1,30 @@
+<aura:component controller="questBoardDragonController">
+    <p style="font-size:20px;font-style:oblique;font-weight:bold;text-align:center;">Dragon's Quest Board!</p>
+    <aura:attribute name="dragAcc" type="Account"/>
+    <aura:attribute name="liveHero" type="Account[]"/>
+    <aura:attribute name="fallHero" type="Account[]"/>
+    <aura:attribute name="message" type="String"/>
+    <aura:attribute name="live" type="boolean" default="false"/>
+    <aura:attribute name="fall" type="boolean" default="false"/>
+    <!--STEP 4: Reveal heros in your dungeon-->
+    <lightning:button label="Show in dungeon" onclick="{!c.liveOnes}"/>
+    <!--STEP 4: Reveal fallen heros your dungeon-->
+    <lightning:button label="Fallen Enemies" onclick="{!c.fallOnes}"/>
+    <aura:if isTrue="{!v.live}">
+        <p>HEROS IN YOU DUNGEON:</p>
+        <lightning:card>
+            <aura:iteration items="{!v.liveHero}" var="heroL">
+                <p>Hero Name: {!heroL.Name}</p>
+                <p>Treasure: {!heroL.Treasure_Total__c}</p>
+            </aura:iteration>
+        </lightning:card>
+    </aura:if>
+    <aura:if isTrue="{!v.fall}">
+        <aura:iteration items="{!v.fallHero}" var="heroF">
+            <p>{!v.message}</p>
+            <p>Hero Name: {!heroF.Name}</p>
+            <p>Treasure: {!heroF.Treasure_Total__c}</p>
+            <p>ID-Card: {!heroF.Id}</p>
+        </aura:iteration>
+    </aura:if>
+</aura:component>
