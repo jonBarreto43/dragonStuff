@@ -1,0 +1,37 @@
+({
+    findDrags : function(cmp) {
+        let action = cmp.get("c.drag");
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            console.log(response.getState());
+            if(state === "SUCCESS"){
+                let dragList = response.getReturnValue();
+                cmp.set("v.drag1", dragList[0]);
+                cmp.set("v.drag2", dragList[1]);
+                cmp.set("v.drag3", dragList[2]);
+                cmp.set("v.drag4", dragList[3]);
+                cmp.set("v.clicked", true);
+            }
+        });
+        $A.enqueueAction(action);
+    },
+    embark : function(cmp, choice){
+        var uA = cmp.get("v.heroAcc.Id");
+        console.log(uA);
+        let action = cmp.get("c.goQuest");
+        action.setParams({choice:JSON.stringify(choice), acc:JSON.stringify(uA)});
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            console.log(response.getState());
+            if(state === "SUCCESS"){
+                if(response.getReturnValue()){
+                    cmp.set('v.message', 'Embarked on Quest');
+                } else {
+                    cmp.set('v.message', 'Already on Quest');
+                }
+            }
+        });
+        $A.enqueueAction(action);
+    }
+
+ })
