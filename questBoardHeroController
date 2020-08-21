@@ -1,0 +1,17 @@
+({
+	getDrags : function(component, event, helper) {
+		helper.findDrags(component);
+	},
+    questOne : function(component, event, helper) {
+		helper.embark(component, 0);
+	},
+    questTwo : function(component, event, helper) {
+		helper.embark(component, 1);
+	},
+    questThree : function(component, event, helper) {
+		helper.embark(component, 2);
+	},
+    questFour : function(component, event, helper) {
+		helper.embark(component, 3);
+	}
+})
