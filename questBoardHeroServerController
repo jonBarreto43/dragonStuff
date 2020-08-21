@@ -1,0 +1,23 @@
+public class questBoardHeroController {
+
+    @AuraEnabled
+    public static List<Account> drag(){
+        return [SELECT Name,ID,Treasure_Total__c FROM Account WHERE type='dragon'];
+    }
+    @AuraEnabled
+    public static Boolean goQuest(String choice, String acc){
+        Integer x = (Integer)JSON.deserializeUntyped(choice);
+        acc = (String)JSON.deserializeUntyped(acc);
+        List<Account> accs = [SELECT Name,Id,On_Quest__c,DungeonId__c,Current_Room__c FROM Account WHERE id=:acc];
+        List<Account> drags = [SELECT Name,ID,Treasure_Total__c FROM Account WHERE type='dragon'];
+        if(accs[0].On_Quest__c==true){
+            return false;
+        } else {
+            accs[0].DungeonId__c = drags[x].Id;
+            accs[0].current_Room__c = 0;
+            accs[0].On_Quest__c = true;
+            update accs;
+            return true;
+        }
+    }
+}
