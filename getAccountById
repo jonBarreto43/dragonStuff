@@ -1,0 +1,6 @@
+public class getAccountById {
+	@AuraEnabled
+    public static Account getAccountResponse(String accountKey) {
+        return [SELECT Id,Name, On_Quest__c,Treasure_Total__c,DungeonRoomOne__c,DungeonRoomTwo__c,DungeonRoomThree__c,current_room__c, Type FROM Account WHERE Id =: accountKey];
+    }
+}
