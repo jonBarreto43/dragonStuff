@@ -1,0 +1,8 @@
+<aura:component implements="forceCommunity:availableForAllPageTypes" access="global" controller="MemoriamController">
+    <p style="font-size:43px;font-style:oblique;font-weight:bold;text-align:center;">IN MEMORIAM</p>
+    <aura:attribute name="fallAcc" type="Account[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:iteration items="{!v.fallAcc}" var="ppl">
+        <p>{!ppl.Name} slain by {!ppl.SlainBy__c}</p>
+    </aura:iteration>
+</aura:component>
