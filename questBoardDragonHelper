@@ -1,0 +1,48 @@
+({
+	getLive : function(cmp) {
+		let action = cmp.get("c.liveGuys");
+        let accInfo = cmp.get("v.dragAcc.Id");
+        console.log(accInfo);
+        action.setParams({accInfo: JSON.stringify(accInfo)});
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            console.log(response.getState());
+            if(state === "SUCCESS"){
+                cmp.set("v.liveHero", response.getReturnValue());
+                console.log(response.getReturnValue());
+                if(cmp.get("v.live")==false){
+                    cmp.set("v.live", true);
+                    cmp.set("v.fall", false);
+                }else{
+                    cmp.set("v.live", false);
+                    cmp.set("v.fall", false);
+                }
+            }
+        });
+        $A.enqueueAction(action);
+    },
+    getFall : function(cmp){
+        let action = cmp.get("c.fallGuy");
+        let accInfo = cmp.get("v.dragAcc.Id");
+        console.log(accInfo);
+        action.setParams({accInfo: JSON.stringify(accInfo)});
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            console.log(response.getState());
+            if(state === "SUCCESS"){
+                cmp.set("v.fallHero", response.getReturnValue());
+                console.log(response.getReturnValue());
+                if(cmp.get("v.fall")==false){
+                    cmp.set("v.live", false);
+                    cmp.set("v.fall", true);
+                    console.log('HEY IN OPEN BUTTon')
+                }else{
+                    console.log('shhhh')
+                    cmp.set("v.live", false);
+                    cmp.set("v.fall", false);
+                }
+            }
+        });
+        $A.enqueueAction(action);
+    }
+})
