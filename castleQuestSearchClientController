@@ -1,0 +1,21 @@
+<aura:component controller="getAccountById">
+    <aura:attribute name="searchKey" type="String"/>
+    <aura:attribute name="account" type="Object"/>
+    <aura:attribute name="isHero" type="boolean" default="false"/>
+    <!--STEP 2: Registers Event to send Account info-->
+    <aura:registerEvent name="currentAccGrab" type="c:accEvent"/>
+    
+    <lightning:card>
+    	<article class="slds-card">
+            <div class="slds-card__body">
+                <lightning:input id="searchKey" label="Search" name="searchKey" value="{!v.searchKey}"/>
+                <!--STEP 2: When this button is pressed it gets account info and fires an event with that info-->
+        		<lightning:button label="Search" onclick="{!c.getAccount}" />
+                <!--STEP 1: When clicked and info is valid we release this event-->
+                <aura:if isTrue="{!v.isHero}">
+                    <c:questBoardEventHandler/>
+                </aura:if>
+            </div>
+        </article>
+    </lightning:card>
+</aura:component>
