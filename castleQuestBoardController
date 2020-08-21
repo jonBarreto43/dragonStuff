@@ -1,0 +1,19 @@
+({
+	changeLogin : function(component, event, helper) {
+		component.set("v.loginUp",event.getParam("logged"));
+        console.log('boolean');
+	},
+    setAcc : function(component, event) {
+        let accts = event.getParam("acc");
+        component.set("v.currentAcc", accts);
+        console.log('account event');
+        console.log('here'+accts.Type);
+        if(accts.Type == 'Hero'){
+            //console.log(accts.Active__c);
+            component.set("v.isHero", true);
+        }
+        if(accts.Type == 'Dragon'){
+            component.set("v.isDragon", true);
+        }
+    }
+})
