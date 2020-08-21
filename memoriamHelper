@@ -1,0 +1,13 @@
+({
+	getAccs : function(cmp) {
+		let action = cmp.get("c.getFall");
+        action.setCallback(this, function(response){
+            let state = response.getState();
+            console.log(response.getState());
+            if(state === "SUCCESS"){
+            	cmp.set('v.fallAcc', response.getReturnValue());
+            }
+        });
+        $A.enqueueAction(action);
+	}
+})
